@@ -1,0 +1,27 @@
+name: Daily Employer Job Alerts
+
+on:
+  schedule:
+    - cron: "15 13 * * *" # 13:15 UTC daily
+  workflow_dispatch:
+
+jobs:
+  send-alerts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fetch fresh employer jobs & notify
+        env:
+          JOB_QUERY: ${{ vars.JOB_QUERY || 'data engineer' }}
+          JOB_LOCATION: ${{ vars.JOB_LOCATION || 'New York' }}
+          JOB_LIMIT: ${{ vars.JOB_LIMIT || '15' }}
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+          JOBVETTA_API_KEY: ${{ secrets.JOBVETTA_API_KEY }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python send_alerts.py
