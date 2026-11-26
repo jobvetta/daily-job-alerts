@@ -1,0 +1,18 @@
+name: Verified Remote AI & ML Engineer Jobs (Telegram)
+on:
+  schedule:
+    - cron: "0 13 * * *"
+  workflow_dispatch:
+jobs:
+  alerts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: jobvetta/jobs-search-action@v1
+        with:
+          rapidapi-key: ${{ secrets.RAPIDAPI_KEY }}
+          query: "machine learning engineer"
+          remote-only: "true"
+          days: "1"
+          limit: "25"
+          telegram-bot-token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          telegram-chat-id: ${{ secrets.TELEGRAM_CHAT_ID }}

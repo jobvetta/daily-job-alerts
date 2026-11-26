@@ -1,0 +1,17 @@
+name: Target Company Hiring Signals (Slack)
+on:
+  schedule:
+    - cron: "0 13 * * 1-5"
+  workflow_dispatch:
+jobs:
+  hiring-signals:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: jobvetta/jobs-search-action@v1
+        with:
+          rapidapi-key: ${{ secrets.RAPIDAPI_KEY }}
+          company: "Datadog"
+          query: "account executive"
+          days: "7"
+          limit: "25"
+          slack-webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}

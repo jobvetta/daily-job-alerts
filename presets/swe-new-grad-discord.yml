@@ -1,0 +1,17 @@
+name: New Grad & Entry Software Engineer Jobs (Discord)
+on:
+  schedule:
+    - cron: "0 13 * * *"
+  workflow_dispatch:
+jobs:
+  alerts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: jobvetta/jobs-search-action@v1
+        with:
+          rapidapi-key: ${{ secrets.RAPIDAPI_KEY }}
+          query: "software engineer"
+          location: "United States"
+          days: "1"
+          limit: "25"
+          discord-webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
